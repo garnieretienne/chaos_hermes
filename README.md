@@ -14,10 +14,10 @@ Usage:
   hermes COMMAND APP [OPTIONS]
 
 Commands:
-  create           # Create a new vhost for the given application. If the vhost already exist, do nothing.
-  destroy          # Destroy the app vhost if exist.
-  update           # Destroy and create a new vhost for the given application with updated datas.
+  create            # Create a new vhost for the given application. If the vhost already exist, do nothing
+  destroy           # Destroy the app vhost if exist
+  update            # Destroy and create a new vhost for the given application with updated datas
 
 Options:
-  --vhost-dir PATH # Directory where vhosts are stored. Must be included in the nginx server configuration.
+  --vhost-dir PATH  # Directory where vhosts are stored. Must be included in the nginx server configuration
 ```
