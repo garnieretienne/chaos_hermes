@@ -9,21 +9,22 @@ Hermes is a CLI tool aimed to manage nginx routes with informations passed on co
 Installation
 ------------
 
-* Production
+* Production: 
   `gem install hermes`
 
-* Development
-  ```
-git clone HERMES_GIT_URL
-cd hermes
-gem build hermes.gemspec
-gem install ./hermes-x.x.x.gem
-  ```
+* Development: 
+	```
+	git clone HERMES_GIT_URL
+	cd hermes
+	gem build hermes.gemspec
+	gem install ./hermes-x.x.x.gem
+	```
 
 Usage
 -----
 
 ```
+$> hermes help
 Description:
   CLI tool to manage NGINX route.
 
@@ -56,8 +57,7 @@ Options:
   --upstream ADDRESS[,ADDRESS]  # Add backend server to proxy to
 
 Example:
-  * hermes create comit comit.io --redirect www.comit.io --alias app.comit.io --vhost-dir /var/http/routes --upstream 192.168.1.12:8080,192.168.1.12:8081
-  * hermes create comit-landing new.comit.io --vhost-dir /var/http/routes --public /srv/http/comit-landing
+  hermes create comit comit.io --redirect www.comit.io --alias app.comit.io --vhost-dir /var/http/routes --upstream 192.168.1.12:8080,192.168.1.12:8081
 
 ```
 
@@ -78,8 +78,7 @@ Options:
   --upstream ADDRESS[,ADDRESS]  # Add backend server to proxy to
 
 Example:
-  * hermes update comit comit.io --redirect www.comit.io --alias app.comit.io --vhost-dir /var/http/routes --upstream 192.168.1.12:8080,192.168.1.12:8081
-  * hermes update comit-landing new.comit.io --vhost-dir /var/http/routes --public /srv/http/comit-landing
+  hermes update comit comit.io --redirect www.comit.io --alias app.comit.io --vhost-dir /var/http/routes --upstream 192.168.1.12:8080,192.168.1.12:8081
 ```
 
 ```
@@ -94,5 +93,5 @@ Options:
 --vhost-dir PATH  # Directory where vhosts are stored. DEFAULT: /etc/nginx/site-enabled
 
 Example:
-  * hermes destroy comit-landing --vhost-dir /var/http/routes
+  hermes destroy comit --vhost-dir /var/http/routes
 ```
