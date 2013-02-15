@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'hermes'
+
+begin
+  raise Hermes::Error.new("'sudo' command is not installed or useable by the current user") if !Hermes::Helpers::Sudo.support?
+  Hermes::NGINX.check_dependencies # Nginx must be running in order to use hermes
+  Hermes::CLI.start
+rescue Hermes::Error => e  
+  $stderr.puts e.message
+  Process.exit(1)
+end  
