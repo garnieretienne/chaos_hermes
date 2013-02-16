@@ -1,4 +1,5 @@
 require 'hermes/error'
+require 'hermes/nginx'
 require 'tmpdir'
 require 'erb'
 
@@ -17,7 +18,7 @@ module Hermes
     # @option opts [String] :vhost_dir the directory where route config files are stored
     # @option opts [String] :nginx_conf the main nginx configuration file
     # @option opts [String] :domain the main domain attached to the application
-    # @option opts [String] :upstream the backend servers addresse
+    # @option opts [String] :upstream the backend server addresses
     # @return [Hermes::Route]
     def initialize(opts={})
       @opts = opts
@@ -27,12 +28,12 @@ module Hermes
       validate_directory @opts[:vhost_dir]
     end
 
-    # Create a new route. Same arguments as `initialize` method.
+    # Create a new route. Same options as `initialize` method.
     # Like the initialize method but write the route configuration in a config file (with a temporary path).
     #
-    # @params [Hash] opts hash of parameters names and values (see `initialize` method)
+    # @param [Hash] opts hash of parameters names and values (see `initialize` method)
     # @return [Hermes::Route]
-    # @see Route#initialize Route.new
+    # @see Route#initialize initialize
     def self.create(opts={})
       route = Hermes::Route.new opts
       route.instance_eval do
@@ -42,12 +43,34 @@ module Hermes
       return route
     end
 
-    # @todo code me
-    def self.update
+    # Update an existing route. Same options as `initialize` method.
+    # Erase the old route config file and create a new one.
+    # Raise an error if the route to update doens't exist.
+    #
+    # @param [Hash] opts hash of parameters names and values (see `initialize` method)
+    # @return [Hermes::Route]
+    # @see Route#initialize initialize
+    def self.update(opts = {})
+      route = Hermes::Route.new opts
+      route.instance_eval do
+        raise Hermes::Error.new "Route for #{@opts[:app_name]} doesn't exist" if !exist?
+        template 'templates/vhost.erb', @tmp_path
+      end
+      return route
     end
 
-    # @todo code me
-    def self.destroy
+    # Delete an existing route.
+    # Erase the old route config file and reload NGINX.
+    # Raise an error if the route doesn't exist.
+    # @param [Hash] opts hash of parameters names and values (see `initialize` method)
+    # @option param [String] app_name name of the app
+    # @option param [String] route config file directory path
+    # @option param [String] main nginx config file
+    def self.destroy(opts = {})
+      #validate_presence app_name: opts[:app_name], vhost_dir: opts[:vhost_dir], nginx_conf: opts[:nginx_conf]
+      vhost_path = "#{opts[:vhost_dir]}/#{opts[:app_name]}"
+      raise Hermes::Error.new "Route for '#{opts[:app_name]}' can't be deleted (#{vhost_path} config file doen't exist)" if !File.exist? vhost_path
+      File.delete vhost_path
     end
 
     # Load route configuration into NGiNX.
