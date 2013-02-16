@@ -54,6 +54,24 @@ Delete an existing route config file and reload nginx.
       puts "Route for #{app_name} deleted"
     end
 
+    desc "list", <<-DESC
+List all app currently routed.
+    DESC
+
+    # Delete an existing route by removing the associed config file and reloading NGINX.
+    def list
+      verify_route_directory_is_included_in_nginx_conf
+      apps = Hermes::Route.list(Hash[options.map{|(k,v)| [k.to_sym,v]}])
+      if !apps.empty?
+        puts "Apps:"
+        apps.each do |app|
+          puts " - #{app}"
+        end
+      else
+        puts "No apps routed"
+      end
+    end
+
     private
 
     # Verify the directory storing route config file is included somewhere in the nginx config file.

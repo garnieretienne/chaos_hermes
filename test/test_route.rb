@@ -100,4 +100,10 @@ class HermesRouteTest < Test::Unit::TestCase
     end
     assert_equal "Route for '#{@params[:app_name]}' can't be deleted (#{@params[:vhost_dir]}/#{@params[:app_name]} config file doen't exist)", e.message
   end
+
+  def test_routed_apps_list
+    assert Hermes::Route.list(vhost_dir: @params[:vhost_dir]).empty?
+    Hermes::Route.create(@params).inject
+    assert !Hermes::Route.list(vhost_dir: @params[:vhost_dir]).empty?
+  end
 end

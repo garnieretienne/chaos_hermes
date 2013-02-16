@@ -62,7 +62,8 @@ module Hermes
     # Delete an existing route.
     # Erase the old route config file and reload NGINX.
     # Raise an error if the route doesn't exist.
-    # @param [Hash] opts hash of parameters names and values (see `initialize` method)
+    #
+    # @param [Hash] opts hash of parameters names and values
     # @option param [String] app_name name of the app
     # @option param [String] route config file directory path
     # @option param [String] main nginx config file
@@ -71,6 +72,17 @@ module Hermes
       vhost_path = "#{opts[:vhost_dir]}/#{opts[:app_name]}"
       raise Hermes::Error.new "Route for '#{opts[:app_name]}' can't be deleted (#{vhost_path} config file doen't exist)" if !File.exist? vhost_path
       File.delete vhost_path
+    end
+
+    # List all app currently routed.
+    # List all app having a vhost config file in the vhost directory.
+    #
+    # @param [Hash] opts hash of parameters names and values
+    # @option param [String] route config file directory path
+    # @return [Array] apps list of apps having routing rules
+    def self.list(opts = {})
+      #validate_presence app_name: vhost_dir: opts[:vhost_dir]
+      Dir.entries(opts[:vhost_dir]).delete_if {|e| (e == '..' || e == '.')}
     end
 
     # Load route configuration into NGiNX.
