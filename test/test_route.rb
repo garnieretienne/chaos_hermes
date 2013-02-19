@@ -56,7 +56,7 @@ class HermesRouteTest < Test::Unit::TestCase
     e = assert_raise Hermes::Error, 'No raise for unexisting vhost dir' do
       Hermes::Route.new params
     end
-    assert_equal "The directory (#{params[:vhost_dir]}) does not exist", e.message
+    assert_equal "The directory (#{params[:vhost_dir]}) doesn't exist", e.message
   end
 
   def test_route_injection_with_non_existing_nginx_conf
@@ -102,8 +102,8 @@ class HermesRouteTest < Test::Unit::TestCase
   end
 
   def test_routed_apps_list
-    assert Hermes::Route.list(vhost_dir: @params[:vhost_dir]).empty?
+    assert Hermes::Route.list(vhost_dir: @params[:vhost_dir]).empty?, "Vhost dir should be empty"
     Hermes::Route.create(@params).inject
-    assert !Hermes::Route.list(vhost_dir: @params[:vhost_dir]).empty?
+    assert !Hermes::Route.list(vhost_dir: @params[:vhost_dir]).empty?, "Vhost dir shouldn't be empty"
   end
 end
