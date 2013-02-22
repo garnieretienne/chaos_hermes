@@ -1,0 +1,78 @@
+> setup command (print help)
+
+Hermes (Find a new name)
+------------------------
+
+Reverse proxy route manager. Support: NGINX
+
+NGINX
+-----
+
+nginx = Hermes::NGINX.new '/etc/nginx/nginx.conf'    #=> (Hermes::NGINX) declare an NGINX instance, verify nginx conf exist, verify user have access to nginx using sudo
+running = nginx.running?                             #=> (Boolean) nginx is running
+routes_included = nginx.include? '/var/nginx/routes' #=> (boolean) folder is included
+nginx.reload!                                        #=> (0) reload nginx server, raise an error if exit code != 0
+
+NGINX::Route
+------------
+
+nginx_route = Hermes::NGINX::Route.new vhost_dir: '/var/nginx/routes', route: Hermes::Route.new(app: 'test', domain: 'domain.tld')
+nginx_route.save
+nginx_route.destroy
+nginx_route.load app: app (=> nginx_vhost_config_file), Hermes::NGINX.new()
+  -> 
+
+Route
+-----
+
+PROXY_SERVICE_ADAPTER = {
+  nginx: NGINX::ROUTER,
+  varnish: VARNISH::ROUTER
+}
+
+Hermes::Router::NGINX ::Route
+Hermes::Router::VARNISH
+
+route = Hermes::Route.new app: 'app', domain: 'domain.tld', backend: [0.0.0.0:8080, 0.0.0.0:8081] router: :nginx #=> Only require app
+route.create routes_options
+route.update upstream: ['0.0.0.0:8080']
+route.destroy
+Hermes::Route.find app: 'app'
+
+Hermes::Router::NGINX::Route
+new
+load (replace the config file if exist)
+
+Hermes::Route
+
+new
+save => Save data to disk (yaml files) # Comment is not the best way but it will do the jobs for middle level hoster
+destroy
+find
+
+create  => #new, #save
+update  => #find, #save
+destroy => #destroy
+
+
+----
+Simpler:
+Hermes::Route
+new
+save
+destroy
+
+hermes route add 
+hermes route delete
+
+
+
+
+
+
+
+=> Support other reverse proxy adapter (varnish)
+=> Use backend and not upstream
+
+
+
