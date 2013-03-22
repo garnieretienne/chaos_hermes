@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Hermes::VERSION
   gem.authors       = ["Etienne Garnier"]
   gem.email         = ["garnier.etienne@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Console utility and libraries to manage nginx routes}
+  gem.summary       = %q{Generate and manage nginx config file for each application proxied by nginx}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
