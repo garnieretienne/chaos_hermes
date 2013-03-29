@@ -19,7 +19,7 @@ DO NOT DO ANYTHING IF THE ROUTE CONFIG FILE ALREADY EXIST.
 
     # Create a route, store it in a template and reload nginx gracefully.
     def create(app_name, domain)
-      verify_route_directory_is_included_in_nginx_conf
+      # verify_route_directory_is_included_in_nginx_conf
       opts = { app_name: app_name, domain: domain }
       Hermes::Route.create(opts.merge(Hash[options.map{|(k,v)| [k.to_sym,v]}])).inject
       puts "Route for #{app_name} created"
@@ -36,7 +36,7 @@ DO NOT DO ANYTHING IF THE ROUTE CONFIG FILE DOESN'T EXIST YET.
     # Update an existing route by removing the old config file, 
     # creating a new config file from scratch and reload NGINX.
     def update(app_name, domain)
-      verify_route_directory_is_included_in_nginx_conf
+      # verify_route_directory_is_included_in_nginx_conf
       opts = { app_name: app_name, domain: domain }
       Hermes::Route.update(opts.merge(Hash[options.map{|(k,v)| [k.to_sym,v]}])).inject
       puts "Route for #{app_name} updated"
@@ -48,7 +48,7 @@ Delete an existing route config file and reload nginx.
 
     # Delete an existing route by removing the associed config file and reloading NGINX.
     def destroy(app_name)
-      verify_route_directory_is_included_in_nginx_conf
+      # verify_route_directory_is_included_in_nginx_conf
       opts = { app_name: app_name }
       Hermes::Route.destroy(opts.merge(Hash[options.map{|(k,v)| [k.to_sym,v]}]))
       puts "Route for #{app_name} deleted"
@@ -60,7 +60,7 @@ List all app currently routed.
 
     # Delete an existing route by removing the associed config file and reloading NGINX.
     def list
-      verify_route_directory_is_included_in_nginx_conf
+      # verify_route_directory_is_included_in_nginx_conf
       apps = Hermes::Route.list(Hash[options.map{|(k,v)| [k.to_sym,v]}])
       if !apps.empty?
         puts "Apps:"
