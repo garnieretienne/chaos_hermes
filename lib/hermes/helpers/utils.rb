@@ -45,7 +45,8 @@ module Hermes
     #   false if nothing has been writed in the destination file.
     def self.template(binding, src, dst)
       template = ERB.new IO.read(src), nil, '-'
-      (IO.write(dst, template.result(binding)) > 0)
+      #(IO.write(dst, template.result(binding)) > 0)
+      (File.open(dst, 'w') { |file| file.write(template.result(binding)) } > 0)
     end
     end
   end
