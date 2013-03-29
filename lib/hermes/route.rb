@@ -38,7 +38,7 @@ module Hermes
       route = Hermes::Route.new opts
       route.instance_eval do
         raise Hermes::Error.new "Route for #{@opts[:app_name]} already declared" if exist?
-        Hermes::Helpers::Utils.template binding, 'templates/vhost.erb', @tmp_path
+        Hermes::Helpers::Utils.template binding, "#{File.dirname(__FILE__)}/../../templates/vhost.erb", @tmp_path
       end
       return route
     end
@@ -54,7 +54,7 @@ module Hermes
       route = Hermes::Route.new opts
       route.instance_eval do
         raise Hermes::Error.new "Route for #{@opts[:app_name]} doesn't exist" if !exist?
-        Hermes::Helpers::Utils.template binding, 'templates/vhost.erb', @tmp_path
+        Hermes::Helpers::Utils.template binding, "#{File.dirname(__FILE__)}/templates/vhost.erb", @tmp_path
       end
       return route
     end
