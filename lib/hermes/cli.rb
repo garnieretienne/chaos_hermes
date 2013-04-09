@@ -30,7 +30,7 @@ Update a route re-creating a new config file and reloading nginx.
 DO NOT DO ANYTHING IF THE ROUTE CONFIG FILE DOESN'T EXIST YET.
     DESC
     method_option :redirect, aliases: "-r", desc: 'add a redirection directive for these domains'
-    method_option :alias, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
+    method_option :aliases, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
     method_option :upstream, aliases: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
 
     # Update an existing route by removing the old config file, 
