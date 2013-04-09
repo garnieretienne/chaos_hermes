@@ -9,7 +9,7 @@ upstream <%= @opts[:app_name] %> {
 <%- end -%>
 
 server {
-  server_name <%= @opts[:domain] %> <%= @opts[:aliases].join(' ') %>;
+  server_name <%= @opts[:domain] %> <%= @opts[:aliases].join(' ') if @opts[:aliases] %>;
 
   <%- if @opts[:upstream] -%>
   location / {
