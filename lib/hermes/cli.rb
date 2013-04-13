@@ -67,7 +67,7 @@ List all app currently routed.
 * Include your vhost dir (where route config file are created) in your nginx config:
   include /var/nginx/routes/*;
     DESC
-    desc "setup", @@setup_text
+    desc "setup", "Display hermes requirements"
 
     def setup
       puts @@setup_text

@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["garnier.etienne@gmail.com"]
   gem.description   = %q{Console utility and library to manage nginx routes}
   gem.summary       = %q{Generate and manage nginx config file for each application proxied by nginx. This tool need 'nginx' and 'sudo' installed on the system.Part of Chaos Open PaaS.}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/garnieretienne/chaos_hermes"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

@@ -1,61 +1,72 @@
 Hermes - Manage NGiNX Routes
 ============================
 
-Introduction
+Description
 ------------
 
-Hermes is a CLI tool aimed to manage nginx routes with informations passed on command line. It will write configuration file and reload nginx after changes.
+Hermes is a CLI tool aimed to manage nginx routes with informations passed on command line. It will write configuration files and reload nginx after changes.
+
+Hermes is part of [Chaos Open PaaS](https://github.com/garnieretienne/chaos).
 
 Installation
 ------------
 
-* Production: 
-  `gem install hermes` # not published yet, name must be changed
+You must have nginx and sudo installed on the host. Hermes is distributed as a ruby gem, you need a working ruby stack to use it (if you don't have one check [rbenv](https://github.com/sstephenson/rbenv)).
 
-* Development: 
-  ```
-    bundle install
-    ruby -Ilib bin/hermes
-  ```
-  or
-	```
-	git clone HERMES_GIT_URL
-	cd hermes
-  bundle install
-	gem build hermes.gemspec
-	gem install ./hermes-x.x.x.gem
-	```
+### Install hermes
+  
+`gem install chaos_hermes`
 
-### Allow the user to reload nginx config without asking for password (required by hermes)
+### Allow an user to reload nginx config without asking for password (required by hermes)
 
-### Include route directory in nginx conf
-
-```
+```bash
 echo "$(whoami) ALL=NOPASSWD: /usr/sbin/nginx -s reload -c *" > /tmp/hermes
 sudo chmod 0440 /tmp/hermes && sudo chown root:root /tmp/hermes 
 sudo mv /tmp/hermes /etc/sudoers.d/hermes
+```
+
+### Include route directory in nginx conf (default is /var/nginx/routes)
+
+```bash
+echo "include /var/nginx/routes/*;" > /tmp/chaos.conf 
+sudo mv /tmp/chaos.conf /etc/nginx/conf.d/chaos.conf
 ```
 
 Usage
 -----
 
 ```
-$> hermes help
 Tasks:
-  hermes create APP_NAME DOMAIN -u, --upstream=ADDRESSES  # Create a new route stored in a config file and reload nginx. DO NOT DO ANYTHING IF THE ROUTE CONFIG FILE AL...
+  hermes create APP_NAME DOMAIN -u, --upstream=ADDRESSES  # Create a new route stored in a config file and reload nginx. Alias for update command. 
   hermes destroy APP_NAME                                 # Delete an existing route config file and reload nginx. 
   hermes help [TASK]                                      # Describe available tasks or one specific task
   hermes list                                             # List all app currently routed. 
-  hermes update APP_NAME DOMAIN -u, --upstream=ADDRESSES  # Update a route re-creating a new config file and reloading nginx. DO NOT DO ANYTHING IF THE ROUTE CONFIG FI...
+  hermes setup                                            # Display hermes requirements
+  hermes update APP_NAME DOMAIN -u, --upstream=ADDRESSES  # Update a route re-creating a new config file and reloading nginx. 
 
 Options:
   -n, [--nginx-conf=NGINX_CONF]  # full path to the main nginx config file
                                  # Default: /etc/nginx/nginx.conf
   -d, [--vhost-dir=VHOST_DIR]    # directory where vhosts are stored
                                  # Default: /var/nginx/routes
+
 ```
-Licence
+
+Testing
 =======
+
+In order to pass the tests (`rake test`), installation instructions must be completed (nginx installed and sudo configured).
+
+```
+git clone https://github.com/garnieretienne/hermes.git
+cd hermes
+bundle install
+bundle exec ruby -Ilib bin/hermes #=> run hermes
+bundle exec rake test             #=> run tests
+```
+
+MIT License
+===========
 
 Copyright (C) 2013 Etienne Garnier
 
