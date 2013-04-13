@@ -61,11 +61,16 @@ List all app currently routed.
       end
     end
 
-    desc "setup", <<-DESC
+    @@setup_text = <<-DESC
 * Write a sudo rule to allow the user to reload nginx:
   username ALL=NOPASSWD: /usr/sbin/nginx -s reload -c *
-* Include your vhost dir (where route config file are created) in your nginx config
+* Include your vhost dir (where route config file are created) in your nginx config:
   include /var/nginx/routes/*;
     DESC
+    desc "setup", @@setup_text
+
+    def setup
+      puts @@setup_text
+    end
   end
 end
