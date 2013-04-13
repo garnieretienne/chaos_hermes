@@ -17,12 +17,6 @@ Alias for update command.
     method_option :alias, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
     method_option :upstream, aliases: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
 
-    # Create a route, store it in a template and reload nginx gracefully.
-    # def create(app_name, domain)
-    #   opts = { app_name: app_name, domain: domain }
-    #   Hermes::Route.create(opts.merge(Hash[options.map{|(k,v)| [k.to_sym,v]}])).inject
-    #   puts "Route for #{app_name} created"
-    # end
     alias_method :create, :update
 
     desc "update APP_NAME DOMAIN", <<-DESC
@@ -67,15 +61,5 @@ List all app currently routed.
         puts "No apps routed"
       end
     end
-
-    private
-
-    # def route_options
-    #   method_option :nginx_conf, aliases: "-n", desc: 'full path to the main nginx config file', default: '/etc/nginx/nginx.conf'
-    #   method_option :vhost_dir, aliases: "-d", desc: 'directory where vhosts are stored', default: '/var/nginx/routes'
-    #   method_option :redirect, aliases: "-r", desc: 'add a redirection directive for these domains'
-    #   method_option :alias, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
-    #   method_option :upstream, aliases: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
-    # end
   end
 end

@@ -41,14 +41,6 @@ class HermesRouteTest < Test::Unit::TestCase
     end
   end
 
-  def test_duplicate_route_creation
-    Hermes::Route.create(@params).inject
-    e = assert_raise Hermes::Error, 'No raise for duplicate route creation' do
-      Hermes::Route.create(@params)
-    end
-    assert_equal "Route for #{@params[:app_name]} already declared", e.message
-  end
-
   def test_route_creation_with_non_existing_vhost_dir
     params = @params
     params.delete(:vhost_dir)
@@ -78,13 +70,6 @@ class HermesRouteTest < Test::Unit::TestCase
     end
     assert File.exist?("#{@vhost_dir}/#{@params[:app_name]}"), "NGINX vhost (#{@vhost_dir}/#{@params[:app_name]}) do not exist"
     assert !(IO.read("#{@vhost_dir}/#{@params[:app_name]}") =~ /127.0.0.1:80/).nil?, "The new upstream address cannot be found in the updated vhost"
-  end
-
-  def test_updating_an_unexistant_route
-    e = assert_raise Hermes::Error, "No error raise on updating an unexisting app route" do
-      Hermes::Route.update(@params)
-    end
-    assert_equal "Route for #{@params[:app_name]} doesn't exist", e.message
   end
 
   def test_destroying_a_route

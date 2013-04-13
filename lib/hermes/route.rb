@@ -28,24 +28,8 @@ module Hermes
       @vhost_path = "#{@opts[:vhost_dir]}/#{@opts[:app_name]}"
     end
 
-    # Create a new route. Same options as `initialize` method.
-    # Like the initialize method but write the route configuration in a config file (with a temporary path).
-    #
-    # @param [Hash] opts hash of parameters names and values (see `initialize` method)
-    # @return [Hermes::Route]
-    # @see Route#initialize initialize
-    def self.create(opts={})
-      route = Hermes::Route.new opts
-      route.instance_eval do
-        raise Hermes::Error.new "Route for #{@opts[:app_name]} already declared" if exist?
-        Hermes::Helpers::Utils.template binding, "#{File.dirname(__FILE__)}/../../templates/vhost.erb", @tmp_path
-      end
-      return route
-    end
-
     # Update an existing route. Same options as `initialize` method.
-    # Erase the old route config file and create a new one.
-    # Raise an error if the route to update doesn't exist.
+    # Erase the old route config file (if exist) and create a new one.
     #
     # @param [Hash] opts hash of parameters names and values (see `initialize` method)
     # @return [Hermes::Route]
@@ -53,10 +37,14 @@ module Hermes
     def self.update(opts = {})
       route = Hermes::Route.new opts
       route.instance_eval do
-        raise Hermes::Error.new "Route for #{@opts[:app_name]} doesn't exist" if !exist?
         Hermes::Helpers::Utils.template binding, "#{File.dirname(__FILE__)}/../../templates/vhost.erb", @tmp_path
       end
       return route
+    end
+
+    # Alias create and update methods
+    class << self 
+      alias_method :create, :update
     end
 
     # Delete an existing route.

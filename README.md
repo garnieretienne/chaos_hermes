@@ -26,6 +26,16 @@ Installation
 	gem install ./hermes-x.x.x.gem
 	```
 
+### Allow the user to reload nginx config without asking for password (required by hermes)
+
+### Include route directory in nginx conf
+
+```
+echo "$(whoami) ALL=NOPASSWD: /usr/sbin/nginx -s reload -c *" > /tmp/hermes
+sudo chmod 0440 /tmp/hermes && sudo chown root:root /tmp/hermes 
+sudo mv /tmp/hermes /etc/sudoers.d/hermes
+```
+
 Usage
 -----
 
