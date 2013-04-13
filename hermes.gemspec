@@ -4,12 +4,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'hermes/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "hermes"
+  gem.name          = "chaos_hermes"
   gem.version       = Hermes::VERSION
   gem.authors       = ["Etienne Garnier"]
   gem.email         = ["garnier.etienne@gmail.com"]
-  gem.description   = %q{Console utility and libraries to manage nginx routes}
-  gem.summary       = %q{Generate and manage nginx config file for each application proxied by nginx}
+  gem.description   = %q{Console utility and library to manage nginx routes}
+  gem.summary       = %q{Generate and manage nginx config file for each application proxied by nginx. This tool need 'nginx' and 'sudo' installed on the system.Part of Chaos Open PaaS.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
