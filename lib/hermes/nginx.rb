@@ -26,11 +26,11 @@ module Hermes
     # Parse the nginx config file to check if the given directory path is included somewhere.
     #
     # @return [Boolean]
-    def self.check_config_dir_included?(dir_path, nginx_conf_file)
-      verify_nginx_conf_exist nginx_conf_file
-      stdin, stdout, stderr, wait_thr = Open3.popen3 "cat #{nginx_conf_file} | grep #{dir_path}"
-      (wait_thr.value.to_i == 0)
-    end
+    # def self.check_config_dir_included?(dir_path, nginx_conf_file)
+    #   verify_nginx_conf_exist nginx_conf_file
+    #   stdin, stdout, stderr, wait_thr = Open3.popen3 "cat #{nginx_conf_file} | grep #{dir_path}"
+    #   (wait_thr.value.to_i == 0)
+    # end
 
     # Verify the specified config file exist.
     # Raise an error if the given file doesn't exist.
