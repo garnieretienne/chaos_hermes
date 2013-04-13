@@ -22,3 +22,13 @@ server {
   }
   <%- end -%>
 }
+
+<%- if @opts[:redirect] -%>
+<%- @opts[:redirect].each do |domain| -%>
+server {
+  server_name <%= domain %>;
+  rewrite ^(.*) http://<%= @opts[:domain] %>$1 permanent;
+}
+
+<%- end -%>
+<%- end -%>
