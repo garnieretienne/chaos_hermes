@@ -4,7 +4,7 @@ require 'hermes/helpers/system'
 
 # Build a PATH env with the given binaries as arguments
 #  clear_path_env('sudo', 'which') do
-#  ... # PATH contain folder with link ti 'sudo' and 'which' commands
+#  ... # PATH contain folder with link to 'sudo' and 'which' commands
 #  end
 def clear_path_env(*binaries)
   path = Dir.mktmpdir
