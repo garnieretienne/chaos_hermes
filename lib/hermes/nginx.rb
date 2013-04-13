@@ -18,7 +18,7 @@ module Hermes
     def self.check_dependencies
       full_command_path = Hermes::Helpers::System.which NGINX_CMD
       raise Hermes::Error.new("'nginx' command is not available nor executable by the current user") if full_command_path == ""
-      raise Hermes::Error.new("This user has no right to run the command '#{RELOAD_COMMAND} -c *' as sudo without password") if !Hermes::Helpers::Sudo.granted? "#{full_command_path} #{RELOAD_ARGS} -c"
+      raise Hermes::Error.new("This user has no right to run the command '#{full_command_path} #{RELOAD_ARGS} -c *' as sudo without password") if !Hermes::Helpers::Sudo.granted? "#{full_command_path} #{RELOAD_ARGS} -c"
       return nil
     end
 
