@@ -61,7 +61,7 @@ In order to pass the tests (`rake test`), installation instructions must be comp
 
 ```
 git clone git://github.com/garnieretienne/chaos_hermes.git
-cd hermes
+cd chaos_hermes
 bundle install
 bundle exec ruby -Ilib bin/hermes #=> run hermes
 bundle exec rake test             #=> run tests
