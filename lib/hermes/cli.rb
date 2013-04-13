@@ -8,17 +8,6 @@ module Hermes
     class_option :nginx_conf, aliases: "-n", desc: 'full path to the main nginx config file', default: '/etc/nginx/nginx.conf'
     class_option :vhost_dir, aliases: "-d", desc: 'directory where vhosts are stored', default: '/var/nginx/routes'
 
-
-    desc "create APP_NAME DOMAIN", <<-DESC
-Create a new route stored in a config file and reload nginx.
-Alias for update command.
-    DESC
-    method_option :redirect, aliases: "-r", desc: 'add a redirection directive for these domains'
-    method_option :alias, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
-    method_option :upstream, aliases: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
-
-    alias_method :create, :update
-
     desc "update APP_NAME DOMAIN", <<-DESC
 Update a route re-creating a new config file and reloading nginx.
     DESC
@@ -33,6 +22,16 @@ Update a route re-creating a new config file and reloading nginx.
       Hermes::Route.update(opts.merge(Hash[options.map{|(k,v)| [k.to_sym,v]}])).inject
       puts "Route for #{app_name} updated"
     end
+
+    desc "create APP_NAME DOMAIN", <<-DESC
+Create a new route stored in a config file and reload nginx.
+Alias for update command.
+    DESC
+    method_option :redirect, aliases: "-r", desc: 'add a redirection directive for these domains'
+    method_option :alias, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
+    method_option :upstream, aliases: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
+
+    alias_method :create, :update
 
     desc "destroy APP_NAME", <<-DESC
 Delete an existing route config file and reload nginx.
@@ -61,5 +60,12 @@ List all app currently routed.
         puts "No apps routed"
       end
     end
+
+    desc "setup", <<-DESC
+* Write a sudo rule to allow the user to reload nginx:
+  username ALL=NOPASSWD: /usr/sbin/nginx -s reload -c *
+* Include your vhost dir (where route config file are created) in your nginx config
+  include /var/nginx/routes/*;
+    DESC
   end
 end
