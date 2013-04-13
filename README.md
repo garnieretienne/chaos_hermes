@@ -60,7 +60,7 @@ Testing
 In order to pass the tests (`rake test`), installation instructions must be completed (nginx installed and sudo configured).
 
 ```
-git clone https://github.com/garnieretienne/hermes.git
+git clone git://github.com/garnieretienne/chaos_hermes.git
 cd hermes
 bundle install
 bundle exec ruby -Ilib bin/hermes #=> run hermes
