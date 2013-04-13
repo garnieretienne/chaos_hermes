@@ -52,6 +52,8 @@ Options:
 
 ```
 
+Code documentation: [rubydoc](http://www.rubydoc.info/github/garnieretienne/chaos_hermes/master/frames)
+
 Testing
 =======
 
