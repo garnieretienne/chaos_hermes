@@ -26,7 +26,7 @@ module Hermes
       # @return [Boolean]
       def self.granted?(cmd)
         raise Hermes::Error.new("'sudo' command is not installed or useable by the current user") if !Hermes::Helpers::Sudo.support?
-        stdin, stdout, stderr, wait_thr = Open3.popen3 "sudo -l -n | grep \"NOPASSWD: #{cmd}\""
+        stdin, stdout, stderr, wait_thr = Open3.popen3 "sudo -l | grep \"NOPASSWD: #{cmd}\""
         (stdout.read != "")
       end
 
