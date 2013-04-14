@@ -5,15 +5,15 @@ module Hermes
   
   # Hermes CLI binding.
   class CLI < Thor
-    class_option :nginx_conf, nginx_conf: "-n", desc: 'full path to the main nginx config file', default: '/etc/nginx/nginx.conf'
-    class_option :vhost_dir, vhost_dir: "-d", desc: 'directory where vhosts are stored', default: '/var/nginx/routes'
+    class_option :nginx_conf, aliases: "-n", desc: 'full path to the main nginx config file', default: '/etc/nginx/nginx.conf'
+    class_option :vhost_dir, aliases: "-d", desc: 'directory where vhosts are stored', default: '/var/nginx/routes'
 
     desc "update APP_NAME DOMAIN", <<-DESC
 Update a route re-creating a new config file and reloading nginx.
     DESC
-    method_option :redirect, redirect: "-r", desc: 'add a redirection directive for these domains', type: :array
+    method_option :redirect, aliases: "-r", desc: 'add a redirection directive for these domains', type: :array
     method_option :aliases, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
-    method_option :upstream, upstream: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
+    method_option :upstream, aliases: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
 
     # Update an existing route by removing the old config file, 
     # creating a new config file from scratch and reload NGINX.
@@ -27,9 +27,9 @@ Update a route re-creating a new config file and reloading nginx.
 Create a new route stored in a config file and reload nginx.
 Alias for update command.
     DESC
-    method_option :redirect, redirect: "-r", desc: 'add a redirection directive for these domains', type: :array
+    method_option :redirect, aliases: "-r", desc: 'add a redirection directive for these domains', type: :array
     method_option :aliases, aliases: "-a", desc: 'add domain aliases', banner: 'ALIASES', type: :array
-    method_option :upstream, upstream: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
+    method_option :upstream, aliases: "-u", desc: 'add backend servers to proxy to', banner: 'ADDRESSES', type: :array, required: true
 
     alias_method :create, :update
 
